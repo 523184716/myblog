@@ -1,0 +1,48 @@
+CREATE TABLE `history_uint` (
+  `itemid` bigint(20) unsigned NOT NULL,
+  `clock` int(11) NOT NULL DEFAULT '0',
+  `value` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `ns` int(11) NOT NULL DEFAULT '0',
+  KEY `history_uint_1` (`itemid`,`clock`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `history` (
+  `itemid` bigint(20) unsigned NOT NULL,
+  `clock` int(11) NOT NULL DEFAULT '0',
+  `value` double(16,4) NOT NULL DEFAULT '0.0000',
+  `ns` int(11) NOT NULL DEFAULT '0',
+  KEY `history_1` (`itemid`,`clock`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+mysql -uroot -p1qaz#EDC
+
+1、停掉mysql主主以及zabbix server
+2、备份mysql主 全库
+3、drop 表 history_uint,检测空间是否是否
+4、启动mysql，建表history_uint,语句如上
+5、校验mysql主主状态是否OK，已经刚创建的表是否有同步
+   max_connections  
+   thread_cache_size
+   expire_logs_days 
+   校验上述三个参数是否有生效
+6、启动mysql查看数据变化，刚创建的表是否有写入数据
+
+
+http://119.4.208.78/zabbix/
+web登录账户：Admin
+密码：Headway!@#0223.
+
+半小时后查验一下几个接口的数据是否正常
+cpuUrl: http://10.36.1.55:5001/zabbix/cpu 
+diskUrl: http://10.36.1.55:5001/zabbix/disk 
+memoryUrl: http://10.36.1.55:5001/zabbix/mem 
+netUrl: http://10.36.1.55:5001/zabbix/net 
+
+
+Zabbix-Proxy-1     10.36.8.60
+Zabbix-Proxy-1     10.36.12.92
+Zabbix-Proxy-1     10.36.16.10
+成都集群1          10.36.1.0/24  选取一台做代理服务器
+成都集群2          10.36.2.0/24  选取一台做代理服务器
+成都集群3          10.36.3.0/24  选取一台做代理服务器   10.36.3.74
+暂时全部采取被动模式，看下分离代理服务器之后的效果在确定是否要做主动模式

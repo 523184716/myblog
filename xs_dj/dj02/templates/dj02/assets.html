@@ -1,0 +1,134 @@
+{% extends 'dj02/base.html' %}
+{% load staticfiles %}
+
+{% block page_display %}
+    <form class="form-inline" action="{% url "dj02:formget" %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <a href="{% url "dj02:add" 22 %}"><button type="button" class="btn btn-primary  active" id="add">增加数据</button></a>
+        <a href="{% url "dj02:delete" %}"><button type="button" class="btn btn-primary  active" id="delete">删除数据</button></a>
+        <a href="{% url "dj02:modify" %}"><button type="button" class="btn btn-primary  active">修改数据</button></a>
+        <a href="{% url "dj02:select" %}"><button type="button" class="btn btn-primary  active">查询数据</button></a>
+        <div class="form-group">
+            <input type="file" id="exampleInputFile" name="test"><button type="submit" class="btn">上传</button>
+        </div>
+    </form>
+    <table class="table">
+        <tr>
+            <td>序号</td>
+            <td>服务名</td>
+            <td>IP地址</td>
+            <td>cpu</td>
+            <td>内存</td>
+            <td>操作系统</td>
+            <td>上架日期</td>
+            <td>机房区域</td>
+            <td>备注</td>
+        </tr>
+        {% for i in assets_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.server_name }}</td>
+                <td>{{ i.server_IP }}</td>
+                <td>{{ i.cpu }}</td>
+                <td>{{ i.mem }}</td>
+                <td>{{ i.system }}</td>
+                <td>{{ i.create_date |date:"Y-m-d H:m:s" }}</td>
+                <td>{{ i.region }}</td>
+                <td>{{ i.remarks }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function get_browser() {
+
+           var N = navigator.appName, ua =navigator.userAgent, tem;
+
+           var M =ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+
+           if (M && (TEM = ua.match(/version\/([\.\d]+)/i)) != null) M[2] =tem[1];
+
+           M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
+
+           return M[0];
+
+       }
+
+       function get_browser_version() {
+
+           var N = navigator.appName, ua = navigator.userAgent, tem;
+
+           var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+
+           if (M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] =tem[1];
+
+           M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
+
+           return M[1];
+
+       }
+
+       var browser = get_browser();
+
+       var browser_version = get_browser_version();
+
+       var br_detect = 0; //default to run
+
+       if (browser == 'MSIE') {
+
+           if (parseInt(browser_version) < 9) {
+
+                var br_detect = 1; //not runthe status js
+
+           }
+
+        } //end if browser
+
+
+
+                   //setJS controller variable for speed monitor plugin
+
+                   var BoomRunMark = 0; //0 = enable ,  1=disable
+
+                   var BoomKickStartMark = 5; // run the collect plugin when random num < 5
+
+                   var RandomNumber = Math.floor((Math.random() * 10) + 1);
+
+                   if(br_detect == 0) {
+
+                            imgLoadBeginTime= new Date();
+
+
+
+                   }
+
+                   //console.log('randomnumber :'+ RandomNumber);
+
+       if (br_detect == 0) {
+
+                     if (BoomRunMark == 0){
+
+                            if(RandomNumber  < BoomKickStartMark ){
+
+                                     BOOMR.init({
+
+                                               beacon_url:"http://perf.che168.com/pv_perf.php",
+
+                                               BW:{ enabled: false },
+
+                                               RT:{
+
+                                                        cookie:'CHE168-RT'
+
+                                               }
+
+                                     });
+
+                            }//endRandomNumber check
+
+                     }// end BoomRunMark check
+
+       }//end if br_detect
+
+    </script>
+{% endblock %}

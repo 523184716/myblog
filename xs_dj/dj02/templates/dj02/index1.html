@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% extends "./base.html" %}
+{% load staticfiles %}
+{% load my_tags %}
+{% block page_display %}
+    <div>
+        ddddd<br>
+        请求方法：{{ request.method }}<br>
+        主路径：{{ request.path }} </br>
+        全路径：{{ request.get_full_path }}</br>
+        current_time：{{ now }}
+    </div>
+    <div>
+        {% for i in List %}
+            {% if forloop.first %}
+                <div style="color: red">{{ forloop.counter }}:{{ i }}</div>
+            {% else %}
+                {{ forloop.counter }}:{{ i
+                    }}
+            {% endif %}
+        {% endfor %}</br>
+        自定义两个参数传递：
+        {% for i in List %}
+            {{ i | DataAdd:1 }}
+        {% endfor %}<br>
+        {% for i in Dict %}
+            {{ i }}:{{ Dict.i }}</br>
+        {% endfor %}
+        {% verbatim %}
+            {{ ceshi }}
+        {% endverbatim %}</br>
+        {% with firsst=myfirstonetest %}
+            别名：{{ firsst }}
+        {% endwith %}
+    </div>
+    <div>
+        过滤器：<br>
+        {{ testdict.num | add:20 }}<br>
+        {{ testdict.page | cut:"name" }}<br>
+        {{ testdict.python | capfirst }}<br>
+        {{ testdict.current_date |date:"Y-m-d" }}<br>
+        {{ testdict.def |default:"测试" }}<br>
+        自定义多个参数传递：{% MultiTags 1 2 3 %}
+    </div>
+{% endblock %}
