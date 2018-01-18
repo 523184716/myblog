@@ -7,3 +7,7 @@ from django.shortcuts import render
 
 def index(request):
     return render(request,'myarticle/index.html',locals())
+
+
+def login(request):
+    return  render(request,'myarticle/login.html',locals())

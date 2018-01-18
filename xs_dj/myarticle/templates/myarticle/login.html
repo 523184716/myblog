@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>xueshen_dj01</title>
+    <!--<link type="text/css" rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="../static/css/index.css">-->
+
+    <link type="text/css" rel="stylesheet" href="{% static "myarticle/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{% static "myarticle/css/login.css" %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 "></div>
+            <img src="{% static "myarticle/image/avatar3.jpg" %}" class="img-responsive img-circle center-block img-size" alt="Responsive image">
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+                <form class="form-inline" action="{% url 'myarticle:login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group has-success has-feedback " id="user">
+                        <label class="control-label" for="inputSuccess4">UserName：</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                            <input type="text" class="form-control user " id="inputSuccess4" aria-describedby="inputSuccess4Status" name="username">
+                        </div>
+                        <div class="input-group input-group-sm btn-block" style="color:red;"><span class="btn-block  text-center">{{ us_result }}</span></div>
+                        <span  aria-hidden="true"></span>
+                        <span id="inputSuccess4Status" class="sr-only">(success)</span>
+                    </div>
+                    <div class="form-group has-success has-feedback" id="passwd">
+                        <label class="control-label" for="inputGroupSuccess3">PassWord：</label>
+                        <div class="input-group input-group-lg ">
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-lock"></i>
+                            </span>
+                            <input type="password" class="form-control passwd" id="inputGroupSuccess3" aria-describedby="inputGroupSuccess3Status" name="password">
+                        </div>
+                        <span  aria-hidden="true"></span>
+                        <span id="inputGroupSuccess3Status" class="sr-only">(success)</span>
+                    </div>
+                    <div class="form-group has-success has-feedback text-center btn-group-lg " id="login">
+                        <input class="btn btn-primary btn-block " type="submit" value="login" id="submitdata">
+                    </div>
+                    <div class="input-group input-group-sm btn-block" style="color:red;"><span class="btn-block text-center">{{ result }}</span></div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+
+            </div>
+        </div>
+    </div>
+    <br>
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-md-8 col-md-offset-2">#}
+{#                <div class="table-responsive">#}
+{#                    <table class="table">#}
+{#                        <tr class="table-data">#}
+{#                            <td>ID</td>#}
+{#                            <td>用户名</td>#}
+{#                            <td>密码</td>#}
+{#                            <td>创建日期</td>#}
+{#                        </tr>#}
+{#                    </table>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        {{ form }}#}
+{#    </div>#}
+    <script type="text/javascript">
+{#        $(function () {#}
+{#            $.ajaxSetup({#}
+{#                headers: { "X-CSRFToken": getCookie("csrftoken") }#}
+{#            });#}
+{#        });#}
+{#        $('#submitdata').click(function () {#}
+{#            var username = $('.user').val()#}
+{#            var password = $('#inputGroupSuccess3').val()#}
+{#            if (username == "") {#}
+{#                var count = $('#inputSuccess4').parent().next("div").hasClass("input-group-sm")#}
+{#                if (!count) {#}
+{#                    $('.user').parent().after('<div class="input-group input-group-sm btn-block" style="color:red;"><span class="btn-block  text-center">请输入用户名</span></div>')#}
+{#                }#}
+{#            }#}
+{#            if (password == ""){#}
+{#                var count = $('#inputGroupSuccess3').parent().next("div").hasClass("input-group-sm")#}
+{#                if (!count) {#}
+{#                    $('.passwd').parent().after('<div class="input-group input-group-sm btn-block" style="color:red;"><span class="btn-block text-center">请输入密码</span></div>')#}
+{#                }#}
+{#            }#}
+{#            $.ajax({#}
+{#                type:"POST",#}
+{#                url:"/dj02/login/",#}
+{#                data:{"username":username,"password":password},#}
+{#                success:function(args) {#}
+{#                    args = jQuery.parseJSON(args);#}
+{#                    console.log(args)#}
+{#                    console.log(args.length)#}
+{#                    if (args.length > 1) {#}
+{#                        for (var i=0;i<args.length;i++) {#}
+{#                            $('.table-data').after('<tr><td>'+args[i].id+'</td><td>'+args[i].username+'</td><td>'+args[i].password+'</td><td>'+args[i].create_date+'</td></tr>')#}
+{#                        }#}
+{#                    }#}
+{#                    else {#}
+{#                        $('#submitdata').parent().after('<div class="input-group input-group-sm btn-block" style="color:red;"><span class="btn-block text-center">'+args.result+'</span></div>')#}
+{#                        setTimeout(function () {#}
+{#                            var count = $('#submitdata').parent().next("div").hasClass("input-group-sm")#}
+{#                            if (count) {#}
+{#                                $('#submitdata').parent().next("div").remove()#}
+{#                            }#}
+{#                        },3000)#}
+{#                    }#}
+{#                }#}
+{#            })#}
+{#        })#}
+        $('#inputSuccess4').focus(function () {
+            var count = $('#inputSuccess4').parent().next("div").hasClass("input-group-sm")
+            if (count) {
+                $('#inputSuccess4').parent().next("div").remove()
+            }
+            var tips = $('#login').next("div").text()
+            if (tips) {
+                $('#login').next("div").remove()
+            }
+        })
+        $('#inputGroupSuccess3').focus(function () {
+            var count = $('#inputGroupSuccess3').parent().next("div").hasClass("input-group-sm")
+            if (count) {
+                $('#inputGroupSuccess3').parent().next("div").remove()
+            }
+            var tips = $('#login').next("div").text()
+            if (tips) {
+                $('#login').next("div").remove()
+            }
+        })
+{#        $('#submitdata').click(function () {#}
+{#            console.log("222")#}
+{#            setTimeout(function () {#}
+{#                var tips = $('#submitdata').parent().next('div').html()#}
+{#                console.log("333")#}
+{#                console.log(tips)#}
+{#            },1000)#}
+{#        })#}
+    </script>
+</body>
+</html>
