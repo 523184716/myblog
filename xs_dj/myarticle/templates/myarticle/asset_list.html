@@ -5,7 +5,7 @@
     <div class="col-md-9 col-sm-9 col-xs-12 ">
     <br>
     <form class="form-inline">
-        <a href="#"><button type="button" class="btn btn-success">添加数据</button></a>
+        <a href="{% url "myarticle:add_asset" %}"><button type="button" class="btn btn-success">添加数据</button></a>
         <button type="button" class="btn btn-success">删除数据</button>
         <button type="submit" class="btn btn-primary navbar-right">搜索</button>
         <div class="form-group navbar-right">
@@ -47,7 +47,7 @@
                     <td>{{ asset.cabinet }}</td>
                     <td>{{ asset.shelf_time }}</td>
                     <td>{{ asset.description }}</td>
-                    <td><a href="#"><button type="button" class="btn btn-success">修改</button></a></td>
+                    <td><a href="/myarticle/update_asset/{{ asset.id }}"><button type="button" class="btn btn-success">修改</button></a></td>
                     <td><a href="#"><button type="button" class="btn btn-success">删除</button></a></td>
                 </tr>
             {% endfor %}

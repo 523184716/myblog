@@ -1,0 +1,20 @@
+{% extends 'myarticle/base.html' %}
+{% load staticfiles %}
+
+{% block content-center %}
+    <div class="col-md-9 col-sm-9 col-xs-12 ">
+        <form>
+            {% csrf_token %}
+                <p>IP地址：{{ obj.ip_add }}</p>
+                <p>承载服务：{{ obj.server_name }}</p>
+                <p>cpu：{{ obj.cpu }}</p>
+                <p>mem：{{ obj.mem }}</p>
+                <p>hard：{{ obj.hard }}</p>
+                <p>区域：{{ obj.region }}</p>
+                <p>地址：{{ obj.position }}</p>
+                <p>机柜位置：{{ obj.cabinet }}</p>
+                <p>上架日期：{{ obj.shelf_time }}</p>
+                <p>说明：{{ obj.description }}</p>
+        </form>
+    </div>
+{% endblock %}
