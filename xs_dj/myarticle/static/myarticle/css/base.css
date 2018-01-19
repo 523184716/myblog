@@ -24,3 +24,7 @@ body {
     background-color: #8a6d3b;
   }
 }
+
+.pub_date_display {
+  text-align: right;
+}

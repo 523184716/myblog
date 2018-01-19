@@ -1,3 +1,4 @@
+#coding:utf-8
 """
 Django settings for xs_dj project.
 
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dj02.apps.Dj02Config',
     'myarticle',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -134,5 +137,21 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,"static").replace("\\","/"),
+    os.path.join(BASE_DIR,"myarticle/static").replace("\\","/"),
 )
+
+#绝对不可以和STATIC_URL一致;upload_to的上传目录
+MEDIA_URL = "myarticle/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR,'myarticle/static').replace("\\","/")
+
+#CKeditor静态文件存放位置
+STATIC_ROOT = os.path.join(BASE_DIR,"myarticle/static/ckeditor").replace("\\","/")
+
+#ckeditor上传文件位置
+CKEDITOR_UPLOAD_PATH = os.path.join(BASE_DIR,"myarticle/static").replace("\\","/")
+
+#ckeditor用到的jQuery文件，依赖于jQuery
+CKEDITOR_JQUERY_URL = "myarticle/static/js/jquery1.12.4.min.js"
+
+#ckeditor使用到的图片模块
+CKEDITOR_IMAGE_BACKEND = "pillow"

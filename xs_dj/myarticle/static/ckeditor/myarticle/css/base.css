@@ -1,0 +1,26 @@
+/*base页面*/
+
+body {
+  background: url("../image/tooplate_body.jpg") repeat;
+}
+@media (min-width: 768px) {
+  .navbgl {
+    background-color: #8a6d3b;
+  }
+}
+@media (min-width: 992px) {
+  .navbgl {
+    background-color: #8a6d3b;
+  }
+}
+@media (min-width: 1200px) {
+  .navbgl {
+    background-color: #8a6d3b;
+  }
+}
+
+@media(min-width:400px) {
+  .navbgl {
+    background-color: #8a6d3b;
+  }
+}

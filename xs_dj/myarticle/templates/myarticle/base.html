@@ -9,15 +9,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %} }} 个人博客 {% endblock %}</title>
+    <title>{% block title %} 个人博客 {% endblock %}</title>
     <!--<link type="text/css" rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css">-->
     <!--<link type="text/css" rel="stylesheet" href="../static/css/index.css">-->
 
     <link type="text/css" rel="stylesheet" href="{% static "myarticle/css/bootstrap.min.css" %}">
-{#    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">#}
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% block mycss %}
     <link type="text/css" href="{% static "myarticle/css/base.css" %}" rel="stylesheet" >
+    {% endblock %}
 </head>
 <body >
     <div class="row">
@@ -65,19 +67,28 @@
     </nav>
     <div class="container navbgl">
         <div class="row">
-            {% block content-left %}
             <div class="col-md-3 col-sm-3 col-xs-8">
-                1
+                <div class="row text-center">
+                    <div class="">
+                        <br>
+                        <a href="{% url "myarticle:asset_list" %}">资产配置</a>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="">
+                        资产配置
+                    </div>
+                </div>
+                {% block content-left %}
+
+                {% endblock %}
             </div>
-            {% endblock %}
             {% block content-center %}
             <div class="col-md-7 col-sm-7 col-xs-10 ">
-                1
             </div>
             {% endblock %}
             {% block content-right %}
             <div class="col-md-2 col-sm-2 col-xs-8 ">
-                1
             </div>
             {% endblock %}
         </div>

@@ -1,0 +1,16 @@
+{% extends 'myarticle/base.html' %}
+{% load staticfiles %}
+{% block title %}  文章展示 {% endblock %}
+{% block mycss %}
+    <link type="text/css" href="{% static "myarticle/css/base.css" %}" rel="stylesheet" >
+{% endblock %}
+{% block content-center %}
+    <div class="col-md-7 col-sm-7 col-xs-10 ">
+    {% for article in obj %}
+        <h3>{{ article.title }}</h3>
+        <p style="text-align: right">作者：{{ article.author }}</p>
+        {{ article.content|safe }}
+        <p style="text-align: right">发表时间：{{ article.pub_date }}</p>
+    {% endfor %}
+    </div>
+{% endblock %}

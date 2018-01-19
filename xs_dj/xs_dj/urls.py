@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^dj02/',include(dj02.urls,namespace="dj02")),
     url(r'^myarticle/', include(myarticle.myarticle_urls, namespace="myarticle")),
+    url(r'ckeditor/',include('ckeditor_uploader.urls')),
 ]

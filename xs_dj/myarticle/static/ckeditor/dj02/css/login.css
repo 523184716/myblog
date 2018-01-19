@@ -1,0 +1,18 @@
+#user,#passwd {
+    margin: 10px 0px;
+}
+
+#login {
+    width: 84%;
+    margin: 10px auto;
+}
+
+.img-size {
+    width: 200px;
+    height: 200px;
+
+}
+/*#login input {*/
+    /*!*display: inline-block;*!*/
+    /*margin: 0 auto;*/
+/*}*/
