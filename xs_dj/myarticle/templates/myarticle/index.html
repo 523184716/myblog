@@ -9,7 +9,7 @@
     {% for article in obj %}
         <h3><a href="/myarticle/article/{{ article.id }}">{{ article.title }}</a></h3>
         <p style="text-align: right">作者：{{ article.author }}</p>
-        <span>{{ article.dsecription|safe}}<a href="/myarticle/article/{{ article.id }}">detail>></a></span>
+        <span >{{ article.dsecription|safe}}<a href="/myarticle/article/{{ article.id }}" style="text-align: right">detail>></a></span>
     {% endfor %}
     </div>
 {% endblock %}

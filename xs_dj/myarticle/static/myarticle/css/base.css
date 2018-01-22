@@ -28,3 +28,8 @@ body {
 .pub_date_display {
   text-align: right;
 }
+
+td span {
+  display: block;
+  text-align: right;
+}

@@ -2,9 +2,92 @@
 {% load staticfiles %}
 
 {% block content-center %}
-    div class="col-md-9 col-sm-9 col-xs-12 ">
-        <form>
+    <div class="col-md-9 col-sm-9 col-xs-12 ">
+        <form action="/myarticle/update_asset/{{ asset_id.id }}" method="post">
+            {% csrf_token %}
+{#            {{ obj.as_table }}#}
+            <table>
+                <tr>
+                    <td><br></br>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">IP地址：</span></td>
+                    <td>{{ obj.ip_add }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">承载服务：</span></td>
+                     <td>{{ obj.server_name }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">cpu：</span></td>
+                    <td>{{ obj.cpu }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">mem：</span></td>
+                    <td>{{ obj.mem }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">hard：</span></td>
+                    <td>{{ obj.hard }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">区域：</span></td>
+                    <td>{{ obj.region }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">地址：</span></td>
+                    <td>{{ obj.position }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">机柜位置：</span></td>
+                    <td>{{ obj.cabinet }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">上架日期：</span></td>
+                    <td>{{ obj.shelf_time }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td><span style="display:block;text-align: right">说明：</span></td>
+                    <td>{{ obj.description }}</td>
+                </tr>
+                <tr>
+                    <td><br></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
 
+                <input type="submit" value="修改" class="btn-primary" style="display: inline-block;width: 70px;height: 40px;margin-left: 70px" >
+                <input type="submit" value="取消" class="btn-primary" style="display: inline-block;width: 70px;height: 40px;margin-left: 50px">
         </form>
     </div>
 {% endblock %}
