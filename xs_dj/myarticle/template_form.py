@@ -3,15 +3,21 @@
 
 from django.forms import  fields
 from  django import  forms
+from django.forms import  widgets
+from models import  Server
 class Asset_Form(forms.Form):
     ip_add = fields.GenericIPAddressField(required=True,error_messages={
         "GenericIPAddressField":"IP地址格式不对",
         "required":"IP地址不能为空"
-    })
+    },
+        initial="请输入IP地址"
+    )
     server_name = fields.CharField(max_length=32,required=True,error_messages={
         "required":"承载服务不能为空",
-        "max_length":"服务名称不能超过32位"
-    })
+        "max_length":"服务名称不能超过32位",
+    },
+    widget = widgets.Select()
+   )
     cpu = fields.CharField()
     mem = fields.CharField()
     hard = fields.CharField()
@@ -21,5 +27,11 @@ class Asset_Form(forms.Form):
     shelf_time = fields.DateField(required=True,error_messages={"required":"上架时间不能为空","DateField":"时间格式不对"},
                                   label_suffix="注：格式 2014-08-01")
     description = fields.CharField(
+        required=False,
         widget=forms.Textarea
     )
+
+    def __init__(self,*args,**kwargs):
+        super(Asset_Form,self).__init__(*args,**kwargs)
+        self.fields["server_name"].widget.choices = \
+        Server.objects.values_list("id", "server_name")

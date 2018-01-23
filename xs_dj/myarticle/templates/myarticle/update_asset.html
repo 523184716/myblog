@@ -12,70 +12,79 @@
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">IP地址：</span></td>
-                    <td>{{ obj.ip_add }}</td>
+                    <td>{{ obj.ip_add }}&nbsp;*{{ obj.errors.ip_add.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">承载服务：</span></td>
-                     <td>{{ obj.server_name }}</td>
+                    <td>{{ obj.server_name }}&nbsp;*{{ obj.errors.server_name.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">cpu：</span></td>
-                    <td>{{ obj.cpu }}</td>
+                    <td>{{ obj.cpu }}&nbsp;{{ obj.errors.cpu.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">mem：</span></td>
-                    <td>{{ obj.mem }}</td>
+                    <td>{{ obj.mem }}&nbsp;{{ obj.errors.mem.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">hard：</span></td>
-                    <td>{{ obj.hard }}</td>
+                    <td>{{ obj.hard }}&nbsp;{{ obj.errors.hard.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">区域：</span></td>
-                    <td>{{ obj.region }}</td>
+                    <td>{{ obj.region }}&nbsp;*{{ obj.errors.region.0 }}</></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">地址：</span></td>
-                    <td>{{ obj.position }}</td>
+                    <td>{{ obj.position }}&nbsp;*{{ obj.errors.positione.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">机柜位置：</span></td>
-                    <td>{{ obj.cabinet }}</td>
+                    <td>{{ obj.cabinet }}&nbsp;*{{ obj.errors.cabinet.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">上架日期：</span></td>
-                    <td>{{ obj.shelf_time }}</td>
+                    <td>{{ obj.shelf_time }}&nbsp;*{{ obj.errors.shelf_time.0 }}</></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><span style="display:block;text-align: right">说明：</span></td>
-                    <td>{{ obj.description }}</td>
+                    <td>{{ obj.description }}&nbsp;{{ obj.errors.description.0 }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><br></td>
@@ -87,7 +96,12 @@
             </table>
 
                 <input type="submit" value="修改" class="btn-primary" style="display: inline-block;width: 70px;height: 40px;margin-left: 70px" >
-                <input type="submit" value="取消" class="btn-primary" style="display: inline-block;width: 70px;height: 40px;margin-left: 50px">
+                <input type="button" value="取消" class="btn-primary" style="display: inline-block;width: 70px;height: 40px;margin-left: 50px" id="add-cancel">
         </form>
     </div>
+    <script type="text/javascript">
+        $('#add-cancel').click(function () {
+            location.href="{% url "myarticle:asset_list" %}"
+        })
+    </script>
 {% endblock %}

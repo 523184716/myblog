@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-2 ">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="{% url "myarticle:index" %}">首页 <span class="sr-only">(current)</span></a></li>
                             <li><a href="#">文章</a></li>
                             <li><a href="#">经典收录</a></li>
                             <li><a href="#">个人随笔</a></li>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">登录</a></li>
+                            <li><a href="{% url "myarticle:login" %}">登录</a></li>
                             <li><a href="#">修改密码</a></li>
                             <li><a href="#">注册</a></li>
                         </ul>

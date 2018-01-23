@@ -38,7 +38,7 @@ class Asset_List(models.Model):
     mem = models.CharField(max_length=32,verbose_name="内存大小",blank=True,null=True)
     hard = models.CharField(max_length=32,verbose_name="硬盘大小",blank=True,null=True)
     region = models.CharField(max_length=32,verbose_name="所在区域")
-    positon = models.CharField(max_length=128,verbose_name="机房地址")
+    position = models.CharField(max_length=128,verbose_name="机房地址")
     cabinet = models.CharField(max_length=64,verbose_name="具体机柜位置")
     shelf_time = models.DateField(verbose_name="上架时间")
     description = models.TextField(verbose_name="备注",blank=True,null=True)
@@ -53,3 +53,11 @@ class Server(models.Model):
     access_type = models.CharField(max_length=32,verbose_name="访问类别")
     def __unicode__(self):
         return self.server_name
+
+class userlogin(models.Model):
+    username = models.CharField(max_length=30)
+    password = models.CharField(max_length=256)
+    create_date = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return  self.username
