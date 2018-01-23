@@ -19,7 +19,7 @@ class Asset_Form(forms.Form):
     position = fields.CharField(required=True,error_messages={"required":"具体地址不能为空"})
     cabinet = fields.CharField(required=True,error_messages={"required":"具体机柜位置不能为空"})
     shelf_time = fields.DateField(required=True,error_messages={"required":"上架时间不能为空","DateField":"时间格式不对"},
-                                  label_suffix="格式：2014-08-01")
+                                  label_suffix="注：格式 2014-08-01")
     description = fields.CharField(
         widget=forms.Textarea
     )
