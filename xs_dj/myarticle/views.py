@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import  datetime
-from django.shortcuts import render,redirect,HttpResponse
+
+from django.shortcuts import render, redirect, HttpResponse
+from io import  BytesIO
 from models import *
+from myarticle.utils.user_secret import usersecret
 # Create your views here.
 from template_form import *
-from django import  forms
-from data_secret.user_secret import usersecret
+from myarticle.utils import create_image,create_images
+
 def index(request):
     obj = Article.objects.all()
     return render(request,'myarticle/index.html',locals())
@@ -21,7 +23,8 @@ def login(request):
         if username and password:
             password = usersecret(password)
             # userlogin.objects.create(username=username, password=password)
-            count = userlogin.objects.filter(username=username, password=password)
+            count = Userlogin.objects.filter(username=username, password=password)
+
             if count:
                 # array = userlogin.objects.all().values("id","username","password","create_date")
                 # array = list(array)
@@ -101,3 +104,25 @@ def update_asset(request,asset_id):
         asset_id = {"id":asset_id}
         # 表单数据加载进新的页面中，这样修改数据就是之前的那天数据
         return  render(request,'myarticle/update_asset.html',locals())
+
+def user_register(request):
+    if request.method == "GET":
+        obj = Register_Form()
+        return  render(request,'myarticle/user_register.html',locals())
+    else:
+        obj = Register_Form(request.POST)
+        if obj.is_valid():
+            pass
+        else:
+            return  render(request,'myarticle/user_register.html',locals())
+
+
+def create_code_img(request):
+    f = BytesIO() #直接在内存开辟一点空间存放临时生成的图片
+    # 调用check_code生成照片和验证码
+    img, code = create_images.Create_image()
+    print img , code
+    request.session['check_code'] = code #将验证码存在服务器的session中，用于校验
+    img.save(f,'PNG') #生成的图片放置于开辟的内存中
+    # print f.getvalue()
+    return HttpResponse(f.getvalue())  #将内存的数据读取出来，并以HttpResponse返回

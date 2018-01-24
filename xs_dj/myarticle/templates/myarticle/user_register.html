@@ -1,0 +1,89 @@
+{#<!DOCTYPE html>#}
+{% extends 'myarticle/base.html' %}
+{% load staticfiles %}
+{#<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+    <title>{% block title %} 用户注册 {% endblock %}</title>
+{#    <!--<link type="text/css" rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css">-->#}
+{#    <!--<link type="text/css" rel="stylesheet" href="../static/css/index.css">-->#}
+{#    <link type="text/css" rel="stylesheet" href="{% static "myarticle/css/bootstrap.min.css" %}">#}
+{#    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">#}
+{#	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>#}
+{#	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
+{#    <link type="text/css" href="{% static "myarticle/css/base.css" %}" rel="stylesheet" >#}
+{#</head>#}
+<body>
+    {% block nav-tag %}
+    {% endblock %}
+    {% block body-content %}
+    {% endblock %}
+    {% block body-myself %}
+    <br>
+    <div class="container navbgl">
+        <div class="row">
+            <br>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-1"></div>
+            <div class="col-md-6 col-sm-8 col-xs-10">
+                <form class="form-horizontal" action="{% url 'myarticle:register' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="inputUser3" class="col-sm-3 control-label">Username：</label>
+                        <div class="col-sm-9">
+{#                            <input type="text" class="form-control" id="inputUser3" placeholder="username">#}
+                            {{ obj.username }}{{ obj.errors.username.0 }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Enter Pwd：</label>
+                        <div class="col-sm-9">
+{#                            <input type="password" class="form-control" id="inputPassword3" placeholder="password">#}
+                            {{ obj.password }}{{ obj.errors.password.0 }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEnterPassword3" class="col-sm-3 control-label">Password：</label>
+                        <div class="col-sm-9">
+{#                            <input type="password" class="form-control" id="inputEnterPassword3" placeholder="enter password">#}
+                            {{ obj.pwd_again }}{{ obj.errors.pwd_again.0 }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputemail3" class="col-sm-3 control-label">Email：</label>
+                        <div class="col-sm-9">
+{#                            <input type="email" class="form-control" id="inputemail3" placeholder="email">#}
+                            {{ obj.email }}{{ obj.errors.email.0 }}
+                        </div>
+                    </div>
+{#                    <div class="form-group">#}
+{#                        <div class="col-sm-offset-3 col-sm-9">#}
+{#                            <div class="checkbox">#}
+{#                                <label>#}
+{#                                    <input type="checkbox"> Remember me#}
+{#                                </label>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button type="submit" class="btn btn-default" >注 册</button>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <span>已有账号？<a href="{% url 'myarticle:login' %}">直接登录</a></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2 col-sm-2"></div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
