@@ -8,7 +8,19 @@ from myarticle.utils.user_secret import usersecret
 from template_form import *
 from myarticle.utils import create_image,create_images
 
+def login_Decorator(func):
+    def wrapper(request,*args):
+        obj = request.session.get("username",None)
+        print obj
+        if obj:
+            return func(request,*args)
+        else:
+            return redirect('/myarticle/login')
+    return wrapper
+
+@login_Decorator
 def index(request):
+    # 加载首页
     obj = Article.objects.all()
     return render(request,'myarticle/index.html',locals())
 
@@ -16,10 +28,11 @@ def login(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
+        # 获取账号密码的值，首先判断是否非空
         if username and password:
+            # 获取前端验证码以及后端创建的验证码保存在session的值是否相同
             session_code = request.session["check_code"]
             web_code = request.POST.get("check_code")
-            # print session_code,web_code
             if session_code.lower() == web_code.lower():
                 password = usersecret(password)
                 # userlogin.objects.create(username=username, password=password)
@@ -31,6 +44,10 @@ def login(request):
                     #     print i.username,i.password, i.create_date
                     # array_dic = {"array":array}
                     # return  HttpResponse(json.dumps(array,cls=CJSONEncoder))
+
+                    # 添加cookie和session
+                    request.session["username"]=password
+                    request.session.set_expiry(0)
                     return redirect('/myarticle/index', permanent=True)
                 else:
                     ret = {"result": "抱歉您的用户名不存在或密码不正确"}
@@ -42,20 +59,25 @@ def login(request):
     else:
         return render(request, 'myarticle/login.html',locals())
 
+@login_Decorator
 def article(request,article_id):
+    # 根据id检索文章的各项内容展示 在前端
     obj = Article.objects.filter(id=article_id)
     return render(request,'myarticle/article_display.html',locals())
 
+@login_Decorator
 def asset(request):
+    # 展示资产列表
     obj = Asset_List.objects.all()
     return  render(request,'myarticle/asset_list.html',locals())
 
+@login_Decorator
 def add_asset(request):
     if request.method == "POST":
         # 提交数据至数据，前提是先验证数据的合法性
         obj = Asset_Form(request.POST)
         if obj.is_valid():
-            print obj.cleaned_data
+            # 在数据有效的前提下从查询集转换成字典，并去除非post用户填写的数据
             obj = obj.cleaned_data
             obj["server_name_id"]=obj["server_name"]
             del obj["server_name"]
@@ -72,9 +94,9 @@ def add_asset(request):
         # 纯粹的加载一个添加数据的页面
         return  render(request,'myarticle/add _asset.html',locals())
 
+@login_Decorator
 def update_asset(request,asset_id):
     if request.method == "POST":
-        print request.POST
         obj = request.POST
         print obj["csrfmiddlewaretoken"]
         # del  obj["csrfmiddlewaretoken"]
@@ -105,13 +127,16 @@ def update_asset(request,asset_id):
         # 表单数据加载进新的页面中，这样修改数据就是之前的那天数据
         return  render(request,'myarticle/update_asset.html',locals())
 
+@login_Decorator
 def user_register(request):
     if request.method == "GET":
+        # 通过form来渲染注册页面
         obj = Register_Form()
         return  render(request,'myarticle/user_register.html',locals())
     else:
         obj = Register_Form(request.POST)
         if obj.is_valid():
+            # 首先判断提交注册的有效性，然后来调用其他的方法来判断数据库中数据是否存在
             result = obj.check_username()
             if result == True:
                 result = obj.check_two_pwd()
@@ -136,3 +161,9 @@ def create_code_img(request):
     img.save(f,'PNG') #生成的图片放置于开辟的内存中
     # print f.getvalue()
     return HttpResponse(f.getvalue())  #将内存的数据读取出来，并以HttpResponse返回
+
+def logout(request):
+    obj = request.session.get("username",None)
+    if obj:
+        del request.session["username"]
+        return  redirect('/myarticle/login')

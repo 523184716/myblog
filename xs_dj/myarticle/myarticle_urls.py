@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'add_asset/',add_asset,name="add_asset"),
     url(r'update_asset/(\d+)',update_asset,name="update_asset"),
     url(r'ver_code_display/',create_code_img,name="ver_code_display"),
+    url(r'logout/',logout,name="logout")
 ]

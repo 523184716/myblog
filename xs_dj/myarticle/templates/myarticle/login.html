@@ -31,7 +31,7 @@
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-user"></i>
                             </span>
-                            <input type="text" class="form-control user " id="inputSuccess4" aria-describedby="inputSuccess4Status" name="username">
+                            <input type="text" class="form-control user " id="inputSuccess4" aria-describedby="inputSuccess4Status" name="username" >
                         </div>
                         <div class="input-group input-group-sm btn-block" style="color:red;"><span class="btn-block  text-center">{{ us_result }}</span></div>
                         <span  aria-hidden="true"></span>
@@ -56,7 +56,7 @@
                             <span>{{ ret }}</span>
                         </div>
                     </div>
-                    <br>
+{#                    <br>#}
                     <div class="form-group has-success has-feedback">
                         <label>
                             <input type="checkbox" value="1" name="auto_login"> Remember me
@@ -66,7 +66,7 @@
                             <a href="#">忘记密码？</a>
                         </div>
                     </div>
-                    <br>
+{#                    <br>#}
                     <div class="form-group has-success has-feedback">
                         <span>没有账号？<a href="{% url 'myarticle:register' %}">注册账号</a></span>
                     </div>

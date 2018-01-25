@@ -85,9 +85,12 @@ class Register_Form(forms.Form):
         }
     )
 
+    # 写几个方法来检测数据库中是否存在，可以单独放其他写也是一样的
     def check_username(self):
+        # self就是这个对象本身，在实例化的时候接收的参数就是一个查询集，所以存在cleaned_data方法
         user = self.cleaned_data.get("username")
         count = Userlogin.objects.filter(username=user).count()
+        # 定制数据格式返回前端
         if count:
             result = {"user":"用户名已经存在"}
             return result
