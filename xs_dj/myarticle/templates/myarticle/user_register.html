@@ -36,14 +36,14 @@
                         <label for="inputUser3" class="col-sm-3 control-label">Username：</label>
                         <div class="col-sm-9">
 {#                            <input type="text" class="form-control" id="inputUser3" placeholder="username">#}
-                            {{ obj.username }}{{ obj.errors.username.0 }}
+                            {{ obj.username }}{{ obj.errors.username.0 }}{{ result.user }}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-3 control-label">Enter Pwd：</label>
                         <div class="col-sm-9">
 {#                            <input type="password" class="form-control" id="inputPassword3" placeholder="password">#}
-                            {{ obj.password }}{{ obj.errors.password.0 }}
+                            {{ obj.password }}{{ obj.errors.password.0 }}{{ result.pwd }}
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,7 +57,7 @@
                         <label for="inputemail3" class="col-sm-3 control-label">Email：</label>
                         <div class="col-sm-9">
 {#                            <input type="email" class="form-control" id="inputemail3" placeholder="email">#}
-                            {{ obj.email }}{{ obj.errors.email.0 }}
+                            {{ obj.email }}{{ obj.errors.email.0 }}{{ result.email }}
                         </div>
                     </div>
 {#                    <div class="form-group">#}

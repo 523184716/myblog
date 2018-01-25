@@ -55,7 +55,7 @@ class Register_Form(forms.Form):
         required=True,
         min_length=8,
         max_length=18,
-        widget=widgets.PasswordInput(attrs={"class":"form-control","id":"inputPassword3","placeholder":"密码:必须包含字母数字特殊字符"}),
+        widget=widgets.PasswordInput(attrs={"class":"form-control","id":"inputPassword3","placeholder":"密码:必须包含字母数字特殊字符"},render_value=True),
         validators=[
             RegexValidator(r'((?=.*\d))^.{6,12}$', '必须包含数字'),
             RegexValidator(r'((?=.*[a-zA-Z]))^.{6,12}$', '必须包含字母'),
@@ -87,9 +87,25 @@ class Register_Form(forms.Form):
 
     def check_username(self):
         user = self.cleaned_data.get("username")
-        print user
         count = Userlogin.objects.filter(username=user).count()
-        print count
         if count:
-           raise ValidationError("用户名已经存在")
-        return user
+            result = {"user":"用户名已经存在"}
+            return result
+           # raise ValidationError("用户名已经存在")
+        return True
+
+    def check_two_pwd(self):
+        pwd = self.cleaned_data.get("password")
+        twice = self.cleaned_data.get("pwd_again")
+        if pwd != twice:
+            result = {"pwd":"两次密码输入的不一致"}
+            return  result
+        return  True
+
+    def check_email(self):
+        email = self.cleaned_data.get("email")
+        count = Userlogin.objects.filter(email=email)
+        if count:
+            result = {"email":"此邮箱已注册"}
+            return  result
+        return True

@@ -51,8 +51,9 @@
                     <div class="form-group has-success has-feedback input-group-lg">
                         <div class="input-group input-group-lg ">
                             <input type="text" class="form-control " name="check_code" id="check_code" placeholder="请输入验证码" style="width: 140px">
-                            <img id="check_code_img" src="{% url 'myarticle:ver_code_display' %}" onclick="refresh_check_code(this)">
+                            <img id="check_code_img" src="{% url 'myarticle:ver_code_display' %}" >
                             <button id="flush" style="font-size: 18px;height: 46px">刷新</button>
+                            <span>{{ ret }}</span>
                         </div>
                     </div>
                     <br>

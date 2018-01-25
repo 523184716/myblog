@@ -19,7 +19,6 @@ draw_line = True
 # 干扰线的颜色
 linecolor = (0,0,255)
 file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"static"+os.sep+"img"+os.sep+"test"+os.sep)
-print file_path
 def Creat_random():
     # 创建一个字符列表
     random_list = list(string.ascii_letters)
@@ -47,9 +46,7 @@ def Create_image():
     #针对这张图片创建画笔
     draw = ImageDraw.Draw(image)
     text = Creat_random()
-    print text
     font_width, font_height = font.getsize(text)
-    print font_width,font_height
     draw.text(((width - font_width) / random_num, (height - font_height) / random_num), text, \
               font=font,fill=fontcolor)  # 填充字符串
 

@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect, HttpResponse
 from io import  BytesIO
 from models import *
 from myarticle.utils.user_secret import usersecret
-# Create your views here.
 from template_form import *
 from myarticle.utils import create_image,create_images
 
@@ -13,36 +12,35 @@ def index(request):
     obj = Article.objects.all()
     return render(request,'myarticle/index.html',locals())
 
-
 def login(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
-        print request.session
-        request.session[password] = password
         if username and password:
-            password = usersecret(password)
-            # userlogin.objects.create(username=username, password=password)
-            count = Userlogin.objects.filter(username=username, password=password)
-
-            if count:
-                # array = userlogin.objects.all().values("id","username","password","create_date")
-                # array = list(array)
-                # for i in array:
-                #     print i.username,i.password, i.create_date
-                # array_dic = {"array":array}
-                # return  HttpResponse(json.dumps(array,cls=CJSONEncoder))
-                return redirect('/myarticle/index', permanent=True)
-            else:
-                ret = {"result": "抱歉您的用户名不存在或密码不正确"}
-                # return HttpResponse(json.dumps(ret))
-                return render(request, 'myarticle/login.html', ret)
+            session_code = request.session["check_code"]
+            web_code = request.POST.get("check_code")
+            # print session_code,web_code
+            if session_code.lower() == web_code.lower():
+                password = usersecret(password)
+                # userlogin.objects.create(username=username, password=password)
+                count = Userlogin.objects.filter(username=username, password=password)
+                if count:
+                    # array = userlogin.objects.all().values("id","username","password","create_date")
+                    # array = list(array)
+                    # for i in array:
+                    #     print i.username,i.password, i.create_date
+                    # array_dic = {"array":array}
+                    # return  HttpResponse(json.dumps(array,cls=CJSONEncoder))
+                    return redirect('/myarticle/index', permanent=True)
+                else:
+                    ret = {"result": "抱歉您的用户名不存在或密码不正确"}
+                    return render(request, 'myarticle/login.html', ret)
+            return render(request,'myarticle/login.html',{"ret":"验证码不正确"})
         else:
             ret = {"us_result": "请输入用户名和密码"}
             return render(request, 'myarticle/login.html', ret)
     else:
         return render(request, 'myarticle/login.html',locals())
-    # return  render(request,'myarticle/login.html',locals())
 
 def article(request,article_id):
     obj = Article.objects.filter(id=article_id)
@@ -59,12 +57,13 @@ def add_asset(request):
         if obj.is_valid():
             print obj.cleaned_data
             obj = obj.cleaned_data
-            # id = Server.objects.filter(server_name=obj["server_name"]).values("id")[0]["id"]
-            # obj["server_name"] = id
-            # print obj
-            print obj
+            obj["server_name_id"]=obj["server_name"]
+            del obj["server_name"]
+            # Asset_List.objects.create(cpu=obj["cpu"],ip_add=obj["ip_add"],mem=obj["mem"],hard=obj["hard"],
+            #                           region=obj["region"],position=obj["position"],cabinet=obj["cabinet"],
+            #                           shelf_time=obj["shelf_time"],description=obj["description"],server_name_id=4)
             Asset_List.objects.create(**obj)
-            return redirect("myarticle/asset_list")
+            return redirect("/myarticle/asset_list")
         else:
 
             return render(request, 'myarticle/add _asset.html', locals())
@@ -85,8 +84,9 @@ def update_asset(request,asset_id):
             # 清除表单用户填写之外的数据，方便载入数据库，顺便转成字典格式
             obj = obj.cleaned_data
             #由于服务这里是通过外键关联的形式，所以得先获取id才能导入数据
-            id = Server.objects.filter(server_name=obj["server_name"]).values("id")[0]["id"]
-            obj["server_name"] = id
+            print obj["server_name"]
+            # id = Server.objects.filter(server_name=obj["server_name"]).values_list("id")
+            # obj["server_name"] = id
             Asset_List.objects.filter(id=asset_id).update(**obj)
             return redirect("myarticle/asset_list")
         else:
@@ -112,17 +112,27 @@ def user_register(request):
     else:
         obj = Register_Form(request.POST)
         if obj.is_valid():
-            pass
+            result = obj.check_username()
+            if result == True:
+                result = obj.check_two_pwd()
+                if result == True:
+                    result = obj.check_email()
+                    if result == True:
+                        obj = obj.cleaned_data
+                        del obj["pwd_again"]
+                        obj["password"] = usersecret(obj["password"])
+                        Userlogin.objects.create(**obj)
+                        return redirect('/myarticle/login')
+            return render(request, 'myarticle/user_register.html', locals())
         else:
             return  render(request,'myarticle/user_register.html',locals())
-
 
 def create_code_img(request):
     f = BytesIO() #直接在内存开辟一点空间存放临时生成的图片
     # 调用check_code生成照片和验证码
     img, code = create_images.Create_image()
-    print img , code
     request.session['check_code'] = code #将验证码存在服务器的session中，用于校验
+    # print request.session["check_code"]
     img.save(f,'PNG') #生成的图片放置于开辟的内存中
     # print f.getvalue()
     return HttpResponse(f.getvalue())  #将内存的数据读取出来，并以HttpResponse返回
