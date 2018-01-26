@@ -6,7 +6,9 @@ from io import  BytesIO
 from models import *
 from myarticle.utils.user_secret import usersecret
 from template_form import *
-from myarticle.utils import create_image,create_images
+from myarticle.utils import create_images
+from django.core.paginator import Page,PageNotAnInteger,Paginator,EmptyPage
+from utils.base_page import Page_set
 
 def login_Decorator(func):
     def wrapper(request,*args):
@@ -19,9 +21,16 @@ def login_Decorator(func):
     return wrapper
 
 @login_Decorator
-def index(request):
-    # 加载首页
-    obj = Article.objects.all()
+def index(request,index_id=1):
+    # 加载首页,获取数据总数
+    obj = Article.objects.all().count()
+    # print obj
+    # 分页实例化
+    page_set = Page_set(obj,"/myarticle/index/",index_id)
+    # 获取此页的数据,默认第一页，有带页面参数时才用自带的
+    obj = Article.objects.all()[page_set.start_index:page_set.end_index]
+    # 获取页码数渲染到前端
+    render_page = page_set.page_render
     return render(request,'myarticle/index.html',locals())
 
 def login(request):
@@ -66,9 +75,13 @@ def article(request,article_id):
     return render(request,'myarticle/article_display.html',locals())
 
 @login_Decorator
-def asset(request):
+def asset(request,index_id=1):
     # 展示资产列表
-    obj = Asset_List.objects.all()
+    print index_id
+    obj = Asset_List.objects.all().count()
+    page_set = Page_set(obj, "/myarticle/asset_list/", index_id)
+    obj = Asset_List.objects.all()[page_set.start_index:page_set.end_index]
+    render_page = page_set.page_render
     return  render(request,'myarticle/asset_list.html',locals())
 
 @login_Decorator
@@ -163,6 +176,7 @@ def create_code_img(request):
     return HttpResponse(f.getvalue())  #将内存的数据读取出来，并以HttpResponse返回
 
 def logout(request):
+    # 如果存在session_id，则删除此id
     obj = request.session.get("username",None)
     if obj:
         del request.session["username"]
