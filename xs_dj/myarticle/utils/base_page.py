@@ -72,7 +72,7 @@ class Page_set(object):
         """
         page_list = []
         per_page_item_num = '<li><a>每页:<select id="per_page_num_get"> \
-                <option value="5">5</option> \
+                <option value="5" selected="selected">5</option> \
                 <option value="6">6</option> \
                 <option value="10">10</option> \
                 <option value="20">20</option> \

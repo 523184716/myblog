@@ -61,6 +61,10 @@ def login(request):
                     request.session["username"]=password
                     request.session.set_expiry(0)
                     # request.session["per_page_display_num"] = 5
+                    # 登录成功删除之前保存的分页数据显示初始值
+                    per_page_item_num = request.session.get("per_page_display_num", None)
+                    if per_page_item_num:
+                        del request.session["per_page_display_num"]
                     return redirect('/myarticle/index', permanent=True)
                 else:
                     ret = {"result": "抱歉您的用户名不存在或密码不正确"}

@@ -98,27 +98,27 @@ WSGI_APPLICATION = 'xs_dj.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': "python_cmdb",
-#         'USER': "root",
-#         'PASSWORD': '123456',
-#         'HOST': "10.36.3.74",
-#         "PORT": "3306",
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "python_cmdb",
         'USER': "root",
         'PASSWORD': '123456',
-        'HOST': "127.0.0.1",
+        'HOST': "10.36.3.74",
         "PORT": "3306",
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': "python_cmdb",
+#         'USER': "root",
+#         'PASSWORD': '123456',
+#         'HOST': "127.0.0.1",
+#         "PORT": "3306",
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 

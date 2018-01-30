@@ -60,17 +60,22 @@
         </nav>
     </div>
     <script>
-        {#$('#per_page_num_get').change(function () {#}
-        {#    var per_page_display_num = $('#per_page_num_get').val()#}
-        {#    console.log("ok")#}
-        {#    console.log(per_page_display_num)#}
-
-
-        {#    onchange=function () {#}
-        {#    var per_page_display_num = $('#per_page_num_get').val()#}
-        {#    console.log("ok")#}
-        {#    console.log(per_page_display_num)#}
-
+        $(function () {
+            {#change只有当select的值发生改变时才出发change#}
+            $('#per_page_num_get').change(function () {
+                {#获取之前option属性为selected的值并删除这个selected属性#}
+                var init_select = $('#per_page_num_get option[selected="selected"]').val()
+                $('#per_page_num_get option[selected="selected"]').removeAttr("selected")
+                {#获取改变之后最新的select的值，并为这个最新的添加selected属性#}
+                var per_page_display_num = $('#per_page_num_get').val();
+                $('#per_page_num_get option:selected').attr("selected","selected")
+                $.ajax({
+                    url:"/myarticle/page_cache/",
+                    type:"GET",
+                    data:{"data":per_page_display_num,"url_path":"/myarticle/index/"},
+                });
+            })
+        })
     </script>
     {% block content-right %}
     {% endblock %}

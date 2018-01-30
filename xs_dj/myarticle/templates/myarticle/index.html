@@ -31,5 +31,20 @@
             {{ render_page | safe}}
         </ul>
     </nav>
+    <script>
+        $(function () {
+            $('#per_page_num_get').change(function () {
+                var init_select = $('#per_page_num_get option[selected="selected"]').val()
+                $('#per_page_num_get option[selected="selected"]').removeAttr("selected")
+                var per_page_display_num = $('#per_page_num_get').val();
+                $('#per_page_num_get option:selected').attr("selected","selected")
+                $.ajax({
+                    url:"/myarticle/page_cache/",
+                    type:"GET",
+                    data:{"data":per_page_display_num,"url_path":"/myarticle/index/"},
+                });
+            })
+        })
+    </script>
     </div>
 {% endblock %}
