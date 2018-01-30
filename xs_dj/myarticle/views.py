@@ -26,7 +26,10 @@ def index(request,index_id=1):
     obj = Article.objects.all().count()
     # print obj
     # 分页实例化
-    page_set = Page_set(obj,"/myarticle/index/",index_id)
+    per_page_item_num = request.session.get("per_page_display_num",None)
+    if not per_page_item_num:
+        per_page_item_num = 5
+    page_set = Page_set(obj,"/myarticle/index/",index_id,per_page_item_num)
     # 获取此页的数据,默认第一页，有带页面参数时才用自带的
     obj = Article.objects.all()[page_set.start_index:page_set.end_index]
     # 获取页码数渲染到前端
@@ -57,6 +60,7 @@ def login(request):
                     # 添加cookie和session
                     request.session["username"]=password
                     request.session.set_expiry(0)
+                    # request.session["per_page_display_num"] = 5
                     return redirect('/myarticle/index', permanent=True)
                 else:
                     ret = {"result": "抱歉您的用户名不存在或密码不正确"}
@@ -79,7 +83,11 @@ def asset(request,index_id=1):
     # 展示资产列表
     print index_id
     obj = Asset_List.objects.all().count()
-    page_set = Page_set(obj, "/myarticle/asset_list/", index_id)
+    per_page_item_num = request.session.get("per_page_display_num", None)
+    if not per_page_item_num:
+        per_page_item_num = 6
+    print "per_page_display_num:",per_page_item_num
+    page_set = Page_set(obj, "/myarticle/asset_list/", index_id,per_page_item_num)
     obj = Asset_List.objects.all()[page_set.start_index:page_set.end_index]
     render_page = page_set.page_render
     return  render(request,'myarticle/asset_list.html',locals())
@@ -181,3 +189,10 @@ def logout(request):
     if obj:
         del request.session["username"]
         return  redirect('/myarticle/login')
+
+def pagecache(request):
+    per_page_display_num = request.GET["data"]
+    url_path =  request.GET["url_path"]
+    print per_page_display_num
+    request.session["per_page_display_num"] = per_page_display_num
+    return  redirect(url_path)

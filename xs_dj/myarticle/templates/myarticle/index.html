@@ -9,8 +9,9 @@
     {% for article in obj %}
         <h3><a href="/myarticle/article/{{ article.id }}">{{ article.title }}</a></h3>
         <p style="text-align: right">作者：{{ article.author }}</p>
-        <span >{{ article.dsecription|safe}}<a href="/myarticle/article/{{ article.id }}" style="text-align: right">detail>></a></span>
+        <span >{{ article.dsecription|safe}}<a href="/myarticle/article/{{ article.id }}"><li style="text-align: right;">detail>></li></a></span>
     {% endfor %}
+    <br/>
     <nav aria-label="Page navigation ">
         <ul class="pagination navbar-right">
 {#            <li><a>每页:<select>#}

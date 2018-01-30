@@ -71,7 +71,8 @@ class Page_set(object):
         :return:
         """
         page_list = []
-        per_page_item_num = '<li><a>每页:<select> \
+        per_page_item_num = '<li><a>每页:<select id="per_page_num_get"> \
+                <option value="5">5</option> \
                 <option value="6">6</option> \
                 <option value="10">10</option> \
                 <option value="20">10</option> \
