@@ -55,6 +55,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE_CLASSES = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.Cs',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
 ROOT_URLCONF = 'xs_dj.urls'
 
 TEMPLATES = [
@@ -87,17 +98,27 @@ WSGI_APPLICATION = 'xs_dj.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': "python_cmdb",
+#         'USER': "root",
+#         'PASSWORD': '123456',
+#         'HOST': "10.36.3.74",
+#         "PORT": "3306",
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "python_cmdb",
         'USER': "root",
         'PASSWORD': '123456',
-        'HOST': "10.36.3.74",
+        'HOST': "127.0.0.1",
         "PORT": "3306",
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 

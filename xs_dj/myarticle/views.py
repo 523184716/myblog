@@ -148,7 +148,7 @@ def update_asset(request,asset_id):
         # 表单数据加载进新的页面中，这样修改数据就是之前的那天数据
         return  render(request,'myarticle/update_asset.html',locals())
 
-@login_Decorator
+
 def user_register(request):
     if request.method == "GET":
         # 通过form来渲染注册页面

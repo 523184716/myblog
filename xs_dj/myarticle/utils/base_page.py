@@ -8,7 +8,7 @@ class Page_set(object):
     per_page_item_num:每页显示的数量，前端可选择
     display_page_num:前端显示可随意点击的页码个数
     """
-    def __init__(self,total_data,access_url,current_page=0,per_page_item_num=5,display_page_num=5):
+    def __init__(self,total_data,access_url,current_page=1,per_page_item_num=5,display_page_num=5):
         self.current_page = int(current_page)
         print self.current_page
         print type(self.current_page)
@@ -75,7 +75,7 @@ class Page_set(object):
                 <option value="5">5</option> \
                 <option value="6">6</option> \
                 <option value="10">10</option> \
-                <option value="20">10</option> \
+                <option value="20">20</option> \
             </select></a></li>'
         first_page = '<li><a href="{}{}">首页</a></li>'.format(self.access_url,1)
         if self.current_page <= 1:
@@ -93,7 +93,10 @@ class Page_set(object):
             next_page = '<li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>'
         else:
             next_page = '<li><a href="{}{}" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>'.format(self.access_url,self.current_page+1)
-        last_page = '<li><a href="{}{}">尾页</a></li>'.format(self.access_url,self.total_page_num)
+        if self.total_page_num == 0:
+            last_page = '<li><a href="{}{}">尾页</a></li>'.format(self.access_url,1)
+        else:
+            last_page = '<li><a href="{}{}">尾页</a></li>'.format(self.access_url, self.total_page_num)
         current_total_page = '<li><a>第{}页/共{}页</a></li>'.format(self.current_page,self.total_page_num)
         list(page_list.append(i) for i in [next_page,last_page,current_total_page])
         return ''.join(page_list)
